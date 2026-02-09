@@ -1,47 +1,28 @@
 <script lang="ts">
-  import svelteLogo from './assets/svelte.svg'
-  import viteLogo from '/vite.svg'
-  import Counter from './lib/Counter.svelte'
+  import Step1 from './components/Step1.svelte';
+  import Step2 from './components/Step2.svelte';
+  import Step3 from './components/Step3.svelte';
+  import Step4 from './components/Step4.svelte';
+  import Step5 from './components/Step5.svelte';
+  let currentStep = 1;
 </script>
 
-<main>
-  <div>
-    <a href="https://vite.dev" target="_blank" rel="noreferrer">
-      <img src={viteLogo} class="logo" alt="Vite Logo" />
-    </a>
-    <a href="https://svelte.dev" target="_blank" rel="noreferrer">
-      <img src={svelteLogo} class="logo svelte" alt="Svelte Logo" />
-    </a>
+<main class="container">
+  <nav class="tabs">
+    {#each [1,2,3,4,5] as s}
+      <button class:active={currentStep === s} on:click={() => currentStep = s}>{s}</button>
+    {/each}
+  </nav>
+
+  {#if currentStep === 1}<Step1 />
+  {:else if currentStep === 2}<Step2 />
+  {:else if currentStep === 3}<Step3 />
+  {:else if currentStep === 4}<Step4 />
+  {:else if currentStep === 5}<Step5 />
+  {/if}
+
+  <div class="nav-buttons">
+    <button on:click={() => currentStep--} disabled={currentStep === 1}>Back</button>
+    <button on:click={() => currentStep++} disabled={currentStep === 5}>Next</button>
   </div>
-  <h1>Vite + Svelte</h1>
-
-  <div class="card">
-    <Counter />
-  </div>
-
-  <p>
-    Check out <a href="https://github.com/sveltejs/kit#readme" target="_blank" rel="noreferrer">SvelteKit</a>, the official Svelte app framework powered by Vite!
-  </p>
-
-  <p class="read-the-docs">
-    Click on the Vite and Svelte logos to learn more
-  </p>
 </main>
-
-<style>
-  .logo {
-    height: 6em;
-    padding: 1.5em;
-    will-change: filter;
-    transition: filter 300ms;
-  }
-  .logo:hover {
-    filter: drop-shadow(0 0 2em #646cffaa);
-  }
-  .logo.svelte:hover {
-    filter: drop-shadow(0 0 2em #ff3e00aa);
-  }
-  .read-the-docs {
-    color: #888;
-  }
-</style>
